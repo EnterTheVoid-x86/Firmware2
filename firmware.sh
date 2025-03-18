@@ -10,7 +10,9 @@ else
 fi
 
 
-device=$(dmidecode -s system-product-name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g' | awk 'NR==1{print $1}')
+echo "If prompted, enter your password"
+
+device=$(sudo dmidecode -s system-product-name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g' | awk 'NR==1{print $1}')
 device=${device^^}
 device=$(echo ${device} | awk '{ print tolower($0) }')
 RECOVERY_KEY_NISSA="https://raw.githubusercontent.com/Cruzy22k/NissaFW2/main/nissa_recovery_v1.vbpubk"
