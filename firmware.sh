@@ -9,6 +9,9 @@ else
     DOWNLOADS_DIR="$HOME/Downloads"
 fi
 
+
+device=$(dmidecode -s system-product-name | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g' | awk 'NR==1{print $1}')
+device=${device^^}
 RECOVERY_KEY_NISSA="https://raw.githubusercontent.com/Cruzy22k/NissaFW2/main/nissa_recovery_v1.vbpubk"
 RECOVERY_KEY_NISSA_FILE="nissa_recovery_v1.vbpubk"
 RECOVERY_KEY_DEDEDE="https://raw.githubusercontent.com/Cruzy22k/NissaFW2/main/dedede_recovery_v1.vbpubk"
@@ -22,33 +25,79 @@ echo -e "\e[32mThis is free software, and you are welcome to redistribute it und
 echo
 
 
-echo "please select what device you have, dedede (1), nissa (2) or corsola (3)"
-echo    
-read -p "Enter the number of the device you have: " -n 1 -r
-echo   
+case "${device}" in
+    # Dedede
+    Awa*) device="dedede" ;;
+    Beadrix*) device="dedede" ;;
+    Beetley*) device="dedede" ;;
+    Blipper*) device="dedede" ;;
+    Bookem*) device="dedede" ;;
+    Boten*) device="dedede" ;;
+    Boxy*) device="dedede" ;;
+    Buggzy*) device="dedede" ;;
+    Cret*) device="dedede" ;;
+    Dexi*) device="dedede" ;;
+    Dita*) device="dedede" ;;
+    Draw*) device="dedede" ;;
+    Gal*) device="dedede" ;;
+    Kracko*) device="dedede" ;;
+    Lan*) device="dedede" ;;
+    Madoo*) device="dedede" ;;
+    Mag*) device="dedede" ;;
+    Metaknight*) device="dedede" ;;
+    Palutena*) device="dedede" ;;
+    Pasara*) device="dedede" ;;
+    Peezer*) device="dedede" ;;
+    Pirette*) device="dedede" ;;
+    Pirika*) device="dedede" ;;
+    Sasuk*) device="dedede" ;;
+    Storo*) device="dedede" ;;
+    Tarzana*) device="dedede" ;;
+    # Corsola
+    Chinchou*) device="corsola" ;;
+    Keldeo*) device="corsola" ;;
+    Kyogre*) device="corsola" ;;
+    Magneton*) device="corsola" ;;
+    Rusty*) device="corsola" ;;
+    Skitty*) device="corsola" ;;
+    Squirtle*) device="corsola" ;;
+    Steelix*) device="corsola" ;;
+    Tenta*) device="corsola" ;;
+    Veluza*) device="corsola" ;;
+    Voltorb*) device="corsola" ;;
+    # Nissa
+    Anraggar*) device="nissa" ;;
+    Craask*) device="nissa" ;;
+    Domi*) device="nissa" ;;
+    Gana*) device="nissa" ;;
+    Glassway*) device="nissa" ;;
+    Gothrax*) device="nissa" ;;
+    Hideo*) device="nissa" ;;
+    Joxer*) device="nissa" ;;
+    Pujjo*) device="nissa" ;;
+    Quandiso*) device="nissa" ;;
+    Riven*) device="nissa" ;;
+    Rudriks*) device="nissa" ;;
+    Rynax*) device="nissa" ;;
+    Sundance*) device="nissa" ;;
+    Teliks*) device="nissa" ;;
+    Uldren*) device="nissa" ;;
+    Xivu*) device="nissa" ;;
+    Yahiko*) device="nissa" ;;
+    Yavi*) device="nissa" ;;
+    *) device="unknown" ;;
+esac
 
-
-echo "DEBUG: You entered '$REPLY'"
-if [[ $REPLY =~ ^[1]$ ]]; then
-    RECOVERY_KEY_URL="$RECOVERY_KEY_DEDEDE"
-    RECOVERY_KEY_FILE="$RECOVERY_KEY_DEDEDE_FILE"
-elif [[ $REPLY =~ ^[2]$ ]]; then
-    RECOVERY_KEY_URL="$RECOVERY_KEY_NISSA"
-    RECOVERY_KEY_FILE="$RECOVERY_KEY_NISSA_FILE"
-elif [[ $REPLY =~ ^[3]$ ]]; then
-    RECOVERY_KEY_URL="$RECOVERY_KEY_CORSOLA"
-    RECOVERY_KEY_FILE="$RECOVERY_KEY_CORSOLA_FILE"
-else
-    echo "Invalid input. Please enter 1, 2 or 3."
-    exit 1
-fi
+case "${device}" in
+    corsola) RECOVERY_KEY_URL="$RECOVERY_KEY_CORSOLA" ; RECOVERY_KEY_FILE="$RECOVERY_KEY_CORSOLA_FILE" ;;
+    dedede) RECOVERY_KEY_URL="$RECOVERY_KEY_DEDEDE" ; RECOVERY_KEY_FILE="$RECOVERY_KEY_DEDEDE_FILE" ;;
+    nissa) RECOVERY_KEY_URL="$RECOVERY_KEY_NISSA" ; RECOVERY_KEY_FILE="$RECOVERY_KEY_NISSA_FILE" ;;
+    unknown) echo "Your device is not one of the following: corsola, dedede, nissa. Failing." ; exit 1
+esac
 
 # Debug output:
 echo "DEBUG: Selected URL: $RECOVERY_KEY_URL"
 echo "DEBUG: Selected file name: $RECOVERY_KEY_FILE"
-
-
-
 
 mkdir -p "$DOWNLOADS_DIR"
 
